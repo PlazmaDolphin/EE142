@@ -24,6 +24,9 @@ public:
 	// Draw the ball 
 	void draw(sf::RenderTarget& target);
 
+	// Check for collision
+	bool isCollidingWith(const Vector2d& ul, const Vector2d& lr) const;
+
 private:
 	Vector2d x;						// position
 	Vector2d v;						// velocity
