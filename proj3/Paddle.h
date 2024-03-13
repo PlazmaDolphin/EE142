@@ -28,6 +28,8 @@ public:
 
             // draw the paddle
             void draw(sf::RenderTarget& target);
+            int getScore() const;               // returns current score for this player
+            void scorePoint();                    // add a point to player’s score
 
 private:
             Vector2d x;                             // position
@@ -39,4 +41,5 @@ private:
             sf::Keyboard::Key downKey;  // key to move downwards
 
             const double paddleSpeed = 400.0;   // how fast the paddle can move
+            int score;
 };

@@ -8,8 +8,8 @@
 // Constructor
 Paddle::Paddle(const Vector2d& _x, const Vector2d& _n,
                         sf::Keyboard::Key _upKey, sf::Keyboard::Key _downKey)
-   : x(_x), v(Vector2d()), n(_n), upKey(_upKey),
-                        downKey(_downKey)
+     : x(_x), v(Vector2d()), n(_n), upKey(_upKey),
+          downKey(_downKey), score(0)
 {
    size = Vector2d(20, 80);
 
@@ -96,4 +96,15 @@ void Paddle::draw(sf::RenderTarget& target)
 
     // draw it there
     target.draw(shape, transform);
+}
+
+int Paddle::getScore() const
+{
+   return score;
+}
+
+void Paddle::scorePoint()
+{
+   // add  point to the score
+   score++;
 }

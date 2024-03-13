@@ -7,7 +7,7 @@
 #include "Graphics.h"
 #include "Vector2d.h"
 #include "Wall.h"
- 
+#include "Paddle.h"
 class Ball
 {
 public:     
@@ -26,9 +26,13 @@ public:
    
     // Check for collision
     bool isCollidingWith(const Wall& wall) const;
+    bool isCollidingWith(const Paddle& paddle) const;
    
     // Bounce in a specified direction
     void bounce(const Vector2d& n);
+    // Serve the ball -- move to a specific location and give it a
+    // random velocity in the specified direction
+    void serve(const Vector2d& position, const Vector2d& dir);
  
 private:
     Vector2d x;                            // position
