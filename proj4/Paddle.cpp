@@ -77,3 +77,13 @@ const Vector2d Paddle::getServingPosition() const
        // x-position in front of paddle
        return (this->x + Vector2d(10, 40)) + 30 * this->n;
 }
+
+// Reset the score to 0
+void Paddle::resetScore()
+{
+       score = 0;
+       // update the text display, too
+       std::stringstream ss;
+       ss << score;
+       scoreText.setText(ss.str());
+}

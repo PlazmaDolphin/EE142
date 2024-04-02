@@ -62,7 +62,22 @@ void Ball::handleCollision(const Thing* other)
 			Vector2d newDir = player->getNormal();
 
 			// serve the ball
-			serve(newPos, newDir);
+			// move the ball off screen and stop moving
+           x = Vector2d(-100, -100);
+           v = Vector2d();
+ 
+           // serve the ball after a 0.5 second delay
+           if (player->getScore() < 10)
+           {
+              Timer::createTimer(0.5, [&, player]() {
+                 // get position and direction to serve from
+                 Vector2d newPos = player->getServingPosition();
+                 Vector2d newDir = player->getNormal();
+ 
+                 // serve the ball
+                 serve(newPos, newDir);
+              });
+           }
 	}
 	// otherwise, ignore the collision
 }

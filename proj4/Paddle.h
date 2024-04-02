@@ -13,10 +13,11 @@ class Paddle: public vmi::MovingThing{
     void move(double dt);
     vmi::Vector2d getNormal() const{return n;}
     //score
-    int getScore(){return score;}
+    int getScore() const{return score;}
     void scorePoint();
     void draw(sf::RenderTarget& target, sf::RenderStates state) const;
     const vmi::Vector2d getServingPosition() const;
+    void resetScore();
 
     private:
     vmi::Vector2d n;

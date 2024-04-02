@@ -39,12 +39,34 @@ PongGame::~PongGame()
 	delete leftPaddle;
 	delete rightPaddle;
 }
-
-
 // Per-frame update for game play
 void PongGame::update(double dt)
 {
-	// intentionally blank
+	// is game over?
+	if ((leftPaddle->getScore() >= 10) || (rightPaddle->getScore() >= 10)) {
+			Key response;
+
+			// post message to user and get response
+			do {
+					response = Game::createMessage("Play again (Y/N)?",
+								Vector2d(175, 200), 40, Color::Yellow);
+			} while ((response != Key::Y) && (response != Key::N));
+
+			if (response == Key::Y) {
+					// restart the game
+					leftPaddle->resetScore();
+					rightPaddle->resetScore();
+
+					// serve the ball
+					ball->serve(leftPaddle->getServingPosition(),
+										leftPaddle->getNormal());
+			}
+
+			else {
+					// game is over
+					done = true;
+			}
+	}
 }
 
 // Whether or not the game is over
