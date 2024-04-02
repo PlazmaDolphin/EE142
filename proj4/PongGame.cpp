@@ -20,10 +20,10 @@ PongGame::PongGame() : Game("Pong-ish", 640, 480), done(false)
 	// create the walls
 	topWall = new Wall(Vector2d(0, 0), Vector2d(639, 1), Vector2d(0, 1));
 	bottomWall = new Wall(Vector2d(0, 478), Vector2d(639, 479), Vector2d(0, -1));
-	leftWall = new Wall(Vector2d(0, 1), Vector2d(1, 478), Vector2d(1, 0));
-	rightWall = new Wall(Vector2d(638, 1), Vector2d(639, 478), Vector2d(-1, 0));
 	leftPaddle = new Paddle(Vector2d(50, 200), Vector2d(1,0), Key::W, Key::S);
 	rightPaddle = new Paddle(Vector2d(570, 200), Vector2d(-1,0), Key::Up, Key::Down);
+	leftWall = new Goal(Vector2d(0, 1), Vector2d(1, 478), rightPaddle);
+	rightWall = new Goal(Vector2d(638, 1), Vector2d(639, 478), leftPaddle);
 	// serve the ball
 	ball->serve(Vector2d(100, 240), Vector2d(1, 0));
 }

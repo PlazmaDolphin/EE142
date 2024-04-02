@@ -1,3 +1,4 @@
+#pragma once
 #include <MovingThing.hpp>
 #include <Vector2d.hpp>
 #include <Keyboard.hpp>
@@ -15,6 +16,7 @@ class Paddle: public vmi::MovingThing{
     int getScore(){return score;}
     void scorePoint();
     void draw(sf::RenderTarget& target, sf::RenderStates state) const;
+    const vmi::Vector2d getServingPosition() const;
 
     private:
     vmi::Vector2d n;

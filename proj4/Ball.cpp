@@ -10,6 +10,7 @@
 #include "Ball.h"
 #include "Wall.h"
 #include "Paddle.h"
+#include "Goal.h"
 using namespace vmi;
 
 
@@ -50,7 +51,19 @@ void Ball::handleCollision(const Thing* other)
 		// bounce off the wall
 		bounce(dynamic_cast<const Paddle*>(other)->getNormal());
 	}
+	// is this a goal?
+	else if (typeid(*other) == typeid(Goal)) {
+			// re-serve the ball
+			const Paddle *player =
+					dynamic_cast<const Goal*>(other)->getPlayer();
 
+			// get position and direction to serve from
+			Vector2d newPos = player->getServingPosition();
+			Vector2d newDir = player->getNormal();
+
+			// serve the ball
+			serve(newPos, newDir);
+	}
 	// otherwise, ignore the collision
 }
 

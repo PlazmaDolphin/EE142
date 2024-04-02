@@ -71,3 +71,9 @@ void Paddle::draw(sf::RenderTarget& target, sf::RenderStates state) const
        // now draw the score
        scoreText.draw(target, state);
 }
+const Vector2d Paddle::getServingPosition() const
+{
+       // Vector math voodoo -- y-position in center of paddle,
+       // x-position in front of paddle
+       return (this->x + Vector2d(10, 40)) + 30 * this->n;
+}

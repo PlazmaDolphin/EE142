@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "Wall.h"
 #include "Paddle.h"
+#include "Goal.h"
 
 class PongGame : public vmi::Game
 {
@@ -21,8 +22,8 @@ private:
 	Ball *ball;
 	Wall *topWall;
 	Wall *bottomWall;
-	Wall *leftWall;
-	Wall *rightWall;
+	Goal *leftWall;
+	Goal *rightWall;
 	Paddle *leftPaddle;
     Paddle *rightPaddle;
 
