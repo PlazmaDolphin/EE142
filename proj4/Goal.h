@@ -1,6 +1,6 @@
 #include <Thing.hpp>
 #include "Paddle.h"
-
+#pragma once
 class Goal : public vmi::Thing{
     public:
     Goal(const vmi::Vector2d& ul, const vmi::Vector2d& lr, Paddle* owner);
