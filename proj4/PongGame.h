@@ -5,7 +5,7 @@
 
 #include "Ball.h"
 #include "Wall.h"
-
+#include "Paddle.h"
 
 class PongGame : public vmi::Game
 {
@@ -23,6 +23,8 @@ private:
 	Wall *bottomWall;
 	Wall *leftWall;
 	Wall *rightWall;
+	Paddle *leftPaddle;
+    Paddle *rightPaddle;
 
 	bool done;
 };

@@ -9,6 +9,7 @@
 
 #include "Ball.h"
 #include "Wall.h"
+#include "Paddle.h"
 using namespace vmi;
 
 
@@ -44,6 +45,10 @@ void Ball::handleCollision(const Thing* other)
 	if (typeid(*other) == typeid(Wall)) {
 		// bounce off the wall
 		bounce(dynamic_cast<const Wall*>(other)->getNormal());
+	}
+	if (typeid(*other) == typeid(Paddle)) {
+		// bounce off the wall
+		bounce(dynamic_cast<const Paddle*>(other)->getNormal());
 	}
 
 	// otherwise, ignore the collision
