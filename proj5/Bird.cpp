@@ -10,6 +10,8 @@
 #include <Game.hpp>
 
 #include "Bird.h"
+#include "Ground.h"
+#include "Pipe.h"
 
 using namespace vmi;
 
@@ -37,7 +39,12 @@ Bird::~Bird()
 // Handle collisions with other things
 void Bird::handleCollision(const Thing* other)
 {
-    // ignore for now
+    // if we hit the ground or the pipe, then we're done for
+    if ((typeid(*other) == typeid(Ground))
+        || (typeid(*other) == typeid(Pipe)))
+    {
+        die();  
+    }
 }
 
 // Move the bird. If the spacebar is pressed, the bird moves
