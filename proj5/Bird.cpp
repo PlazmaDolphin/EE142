@@ -1,22 +1,23 @@
 // This is the bird, our main character
-
 #include <sstream>
 
+#include <Graphics.hpp>
 #include <MovingThing.hpp>
 #include <Thing.hpp>
 #include <Vector2d.hpp>
 #include <SpriteShape.hpp>
 #include <Keyboard.hpp>
 #include <Game.hpp>
+#include <Text.hpp>
+#include <Color.hpp>
 
 #include "Bird.h"
 #include "Ground.h"
 #include "Pipe.h"
+#include "Goal.h"
 
 using namespace vmi;
 
-// Create our bird in the center of the window. Acceleration is due
-// to gravity. Use a sprite for the shape
 // Create our bird in the center of the window. Acceleration is due
 // to gravity. Use a sprite for the shape
 Bird::Bird() : MovingThing(
@@ -24,10 +25,17 @@ Bird::Bird() : MovingThing(
                     Vector2d(),             // no velocity
                     Vector2d(0, 980),       // acceleration from gravity
                     new SpriteShape("proj5/bird.png")     // image for sprite
-                )
+                ),
+                score(0)
 {
     // set the center of the bird (image is 51x36, so half that)
     center = Vector2d(25, 18);
+
+    // set up the text display of the score
+    scoreText.setText("0");
+    scoreText.setCharacterSize(60);
+    scoreText.setPosition(Vector2d(50, 25));
+    scoreText.setFill(Color::White);
 }
 
 // Delete the bird's shape
@@ -45,6 +53,11 @@ void Bird::handleCollision(const Thing* other)
     {
         die();  
     }
+
+    // if we hit a goal, then score a point
+    else if (typeid(*other) == typeid(Goal)) {
+        scorePoint();
+    }
 }
 
 // Move the bird. If the spacebar is pressed, the bird moves
@@ -54,7 +67,7 @@ void Bird::move(double dt)
 {
     if (Game::isKeyPressed(Key::Space)) {
         // constant velocity upwards
-        v.setY(-200); //CHANGE THIS
+        v.setY(-200);
     }
 
     // rotate based on speed (trial-and-error to figure out how
@@ -68,4 +81,31 @@ void Bird::move(double dt)
     angle = (angle < -15) ? -15
             : (angle > 15) ? 15
             : angle;
+}
+
+// Draw the bird. We override this function to also display the score
+void Bird::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    // draw the bird
+    Thing::draw(target, states);
+
+    // draw the score
+    scoreText.draw(target, states);
+}
+
+// Score a point and update the display
+void Bird::scorePoint()
+{
+    score++;
+
+    // update the display, too
+    std::stringstream ss;
+    ss << score;
+    scoreText.setText(ss.str());
+}
+
+// Getter function
+int Bird::getScore() const
+{
+    return score;
 }

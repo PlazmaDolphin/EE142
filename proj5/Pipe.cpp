@@ -7,8 +7,9 @@
 #include <Vector2d.hpp>
 #include <SpriteShape.hpp>
 #include <Timer.hpp>
-
+#include "Wall.h"
 #include "Pipe.h"
+#include "Goal.h"
 
 using namespace vmi;
 
@@ -33,7 +34,11 @@ Pipe::~Pipe()
 
 void Pipe::handleCollision(const Thing* other)
 {
-    // ignore collisions for now
+    // we die if we hit the wall
+    if (typeid(*other) == typeid(Wall))
+    {
+        die();
+    }
 }
 
 // Factory function to create pair of pipes. The gap between them
@@ -50,6 +55,9 @@ void Pipe::createPipes()
 
     // location of bottom pipe is 150 below top of gap
     new Pipe(Vector2d(800, topOfGap + 150));
+
+    // create a new goal that will follow the pipes
+    new Goal();
 
     // now set up to create the next pipes after a delay
     int delayTime = rand() % 4 + 4;         // between 4 and 8 seconds

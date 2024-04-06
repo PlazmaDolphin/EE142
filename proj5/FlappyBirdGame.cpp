@@ -5,6 +5,7 @@
 #include "Bird.h"
 #include "Ground.h"
 #include "Pipe.h"
+#include "Wall.h"
 
 using namespace vmi;
 
@@ -57,6 +58,7 @@ bool FlappyBirdGame::isOver() const
 void FlappyBirdGame::startLevel()
 {
     new Ground();
+    new Wall();
    
     bird = new Bird();
 
