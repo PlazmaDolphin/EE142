@@ -10,12 +10,13 @@
 #include <Game.hpp>
 #include <Text.hpp>
 #include <Color.hpp>
+#include <BoundingBox.hpp>
 
 #include "Bird.h"
 #include "Ground.h"
 #include "Pipe.h"
 #include "Goal.h"
-
+#include "Sky.h"
 using namespace vmi;
 
 // Create our bird in the center of the window. Acceleration is due
@@ -49,9 +50,21 @@ void Bird::handleCollision(const Thing* other)
 {
     // if we hit the ground or the pipe, then we're done for
     if ((typeid(*other) == typeid(Ground))
-        || (typeid(*other) == typeid(Pipe)))
+        || (typeid(*other) == typeid(Pipe))
+        || (typeid(*other) == typeid(Sky)))
     {
-        die();  
+        // see if we really hit it. The bird is mostly a circle
+        // with a radius = ~20, so see if center of bird is inside
+        // the other bounding box, plus an extra 20 pixels
+        BoundingBox otherBox = other->getBounds();
+
+        // extend by 40 pixels (20 per side)
+        otherBox += otherBox.getUl() + Vector2d(-20, -20);
+        otherBox += otherBox.getLr() + Vector2d(20, 20);
+
+        if (otherBox.contains(x + center)) {
+            die();
+        }
     }
 
     // if we hit a goal, then score a point

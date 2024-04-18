@@ -6,7 +6,8 @@
 #include "Ground.h"
 #include "Pipe.h"
 #include "Wall.h"
-
+#include "Sky.h"
+#include "Background.h"
 using namespace vmi;
 
 FlappyBirdGame::FlappyBirdGame()
@@ -59,7 +60,9 @@ void FlappyBirdGame::startLevel()
 {
     new Ground();
     new Wall();
-   
+    new Sky();
+    new Background();
+
     bird = new Bird();
 
     // start creating pipes
