@@ -5,11 +5,13 @@
 class RotatingThing : public vmi::MovingThing{
     public:
     RotatingThing(const vmi::Vector2d _x, const vmi::Vector2d _v, const vmi::Vector2d _a,
-    vmi::Shape* _shape, const int r, double _z = 0);
+    vmi::Shape* _shape, const int r, double fullSize=1.0, double _z = 0.0);
+    const double getScaleFactor() const;
     const double getSizeMultiplier() const;
     //Overridden functions
     const vmi::Vector2d polarPosition() const;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
     int resolution; //needed for position and size conversion, assumes play area is square
+    double fullSize; //default scaling factor to blow up sprites
 };

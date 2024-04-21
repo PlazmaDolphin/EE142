@@ -3,7 +3,7 @@
 
 using namespace vmi;
 Gyruss::Gyruss()
-: Game("Gyruss but better v0.1", RESOLUTION, RESOLUTION+200), done(false){
+: Game("Gyruss but better v0.1", RESOLUTION, RESOLUTION), done(false){
     startLevel();
 }
 void Gyruss::update(double dt){
