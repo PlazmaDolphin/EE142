@@ -21,29 +21,31 @@ Player::~Player(){
 void Player::handleCollision(const Thing* other){
     return; //nothing else exists yet
 }
-
+//Move by rotating in a circle
 void Player::move(double dt){
-    if(Game::isKeyPressed(Key::A)){
-        v.setX(-200);
-    }
-    else if(Game::isKeyPressed(Key::D)){
-        v.setX(200);
-    }
-    else{
-        v.setX(0);
-    }
+    x.setX(x.getX()<RESOLUTION ? x.getX(): 0);
+    x.setX(x.getX()>=0 ? x.getX(): RESOLUTION);
+    double move; //target angle according to keys
     if(Game::isKeyPressed(Key::W)){
-        v.setY(-200);
-        std::cout<<x.getY()<<std::endl;
+        if(Game::isKeyPressed(Key::A)) move = 135.0;
+        else if(Game::isKeyPressed(Key::D)) move = 225.0;
+        else move = 180.0;
     }
     else if(Game::isKeyPressed(Key::S)){
-        v.setY(200);
-        std::cout<<x.getY()<<std::endl;
+        if(Game::isKeyPressed(Key::A)) move = 45.0;
+        else if(Game::isKeyPressed(Key::D)) move = 315.0;
+        else move = 0.0;
     }
+    else if(Game::isKeyPressed(Key::A)) move = 90.0;
+    else if(Game::isKeyPressed(Key::D)) move = 270.0;
     else{
-        v.setY(0);
+        v.setX(0);
+        return;
     }
-    angle = 270.0 + 360.0*x.getX()/RESOLUTION;
+    if(std::fmod(angle-(move-180),360)-180<0) v.setX(200);
+    else(v.setX(-200));
+    angle = 270+360.0*x.getX()/RESOLUTION;
+    std::cout<<std::fmod(angle-(move-180),360)-180<<std::endl;
     MovingThing::move(dt);
 }
 

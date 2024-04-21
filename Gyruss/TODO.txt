@@ -1,5 +1,5 @@
 BAREBONES GYRUSS:
-1. Player movement (still need proper WASD control over rotating axis)
+[X] Player movement (still need proper WASD control over rotating axis)
 2. Player shooting
 3. Collision detection
 4. Enemies
@@ -11,10 +11,12 @@ FULL GYRUSS GAME:
 1. Life System + Extra Lives
 2. Dual-shot powerup
 3. Hi Score Table
-4. Enemy Formations
-5. Special (chance) stages
-6. Starfield background
-7. Sound?
+4. Sprite Animations
+5. Enemy Formations
+6. Special (chance) stages
+7. Starfield background
+8. Sound?
+9. Pixelated Text font
 
 EXTENDED GAME:
 1. Easy Mode (Healthbar)
