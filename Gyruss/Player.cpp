@@ -10,8 +10,8 @@
 using namespace vmi;
 
 Player::Player()
-: RotatingThing(Vector2d(RESOLUTION*0.25, RESOLUTION*0.9), Vector2d(), Vector2d(),
-new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 2.0){
+: RotatingThing(Vector2d(RESOLUTION*0.25, RESOLUTION*0.85), Vector2d(), Vector2d(),
+new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 1.6){
     center = Vector2d(20, 21);
 }
 Player::~Player(){
@@ -23,6 +23,20 @@ void Player::handleCollision(const Thing* other){
 }
 //Move by rotating in a circle
 void Player::move(double dt){
+    if(Game::isKeyPressed(Key::Space) && shots.size()<3){
+        if(!justShot){
+            justShot = true;
+            std::cout<<"BANG!";
+            shots.push_back(new Shot(x.getX()));
+        }
+    }
+    else justShot=false;
+    for(Shot* s: shots){
+        if(!s->isAlive()){
+            shots.erase(std::find(shots.begin(), shots.end(), s));
+        }
+    }
+
     x.setX(x.getX()<RESOLUTION ? x.getX(): 0);
     x.setX(x.getX()>=0 ? x.getX(): RESOLUTION);
     double move; //target angle according to keys
@@ -45,7 +59,6 @@ void Player::move(double dt){
     if(std::fmod(angle-(move-180),360)-180<0) v.setX(200);
     else(v.setX(-200));
     angle = 270+360.0*x.getX()/RESOLUTION;
-    std::cout<<std::fmod(angle-(move-180),360)-180<<std::endl;
     MovingThing::move(dt);
 }
 
