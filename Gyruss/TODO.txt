@@ -1,7 +1,7 @@
 BAREBONES GYRUSS:
 [X] Player movement (still need proper WASD control over rotating axis)
-2. Player shooting
-3. Collision detection
+[X] Player shooting
+[X] Collision detection
 4. Enemies
 5. Enemy projectiles
 6. Game over

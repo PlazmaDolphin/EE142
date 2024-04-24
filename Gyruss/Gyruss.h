@@ -2,6 +2,7 @@
 
 #include <Game.hpp>
 #include "Player.h"
+#include "Enemy.h"
 
 class Gyruss : public vmi::Game
 {
@@ -19,4 +20,5 @@ public:
 private:
     bool done;
     Player* player;
+    Enemy* enemy;
 };

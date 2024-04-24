@@ -3,6 +3,7 @@
 #ifndef VMI_GAME_THING_H
 #define VMI_GAME_THING_H
 
+#define DEBUG
 
 #include <set>
 #include <typeinfo>
@@ -144,6 +145,20 @@ inline void Thing::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     // now draw it
 	shape->draw(target, states);
+
+#ifdef DEBUG
+    // for debugging, draw the bounding box
+    BoundingBox bb = getBounds();
+
+    // SFML box
+    sf::RectangleShape box(sf::Vector2f(bb.getWidth(), bb.getHeight())); 
+    box.setOutlineColor(sf::Color::Red);
+    box.setOutlineThickness(1.0);
+    box.setFillColor(sf::Color::Red);
+    box.setPosition(bb.getUl().getX(), bb.getUl().getY());
+    target.draw(box, sf::RenderStates());
+
+#endif
 }
 
 // get a bounding box around thing -- we have to take the rotation, scale, and position into account,

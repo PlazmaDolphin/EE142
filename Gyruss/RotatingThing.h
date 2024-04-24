@@ -1,7 +1,8 @@
-#include "Vector2d.hpp"
-#include "MovingThing.hpp"
-
 #pragma once
+#include <Vector2d.hpp>
+#include <MovingThing.hpp>
+#include <BoundingBox.hpp>
+#include <Thing.hpp>
 class RotatingThing : public vmi::MovingThing{
     public:
     RotatingThing(const vmi::Vector2d _x, const vmi::Vector2d _v, const vmi::Vector2d _a,
@@ -11,6 +12,10 @@ class RotatingThing : public vmi::MovingThing{
     //Overridden functions
     const vmi::Vector2d polarPosition() const;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    bool actuallyTouching(const RotatingThing* other) const;
+    double getAngle() const;
+    //include getBounds to return a (close enough) bounding box based on circle collision
+    const vmi::BoundingBox getBounds() const;
     private:
     int resolution; //needed for position and size conversion, assumes play area is square
     double fullSize; //default scaling factor to blow up sprites

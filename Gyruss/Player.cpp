@@ -26,7 +26,6 @@ void Player::move(double dt){
     if(Game::isKeyPressed(Key::Space) && shots.size()<3){
         if(!justShot){
             justShot = true;
-            std::cout<<"BANG!";
             shots.push_back(new Shot(x.getX()));
         }
     }

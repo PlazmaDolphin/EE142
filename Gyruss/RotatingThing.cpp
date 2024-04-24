@@ -1,5 +1,5 @@
+#define DEBUG
 #include "RotatingThing.h"
-
 using namespace vmi;
 using namespace std;
 RotatingThing::RotatingThing(const Vector2d _x, const Vector2d _v, const Vector2d _a, Shape* _shape, const int r, double _fullsize, double _z)
@@ -35,4 +35,35 @@ void RotatingThing::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 
     // now draw it
 	shape->draw(target, states);
+
+
+    #ifdef DEBUG
+    // for debugging, draw the bounding box
+    BoundingBox bb = getBounds();
+
+    // SFML box
+    sf::RectangleShape box(sf::Vector2f(bb.getWidth(), bb.getHeight())); 
+    box.setOutlineColor(sf::Color::Red);
+    box.setOutlineThickness(3.0);
+    box.setFillColor(sf::Color::Transparent);
+    box.setPosition(bb.getUl().getX(), bb.getUl().getY());
+    target.draw(box, sf::RenderStates());
+    #endif
+}
+double RotatingThing::getAngle() const{
+    return 270+360.0*x.getX()/resolution;
+}
+bool RotatingThing::actuallyTouching(const RotatingThing* other) const{
+    cout << "ROTATION COLLISION";
+    double yDiff = polarPosition().getY() - other->polarPosition().getY();
+    double xDiff = fmod(getAngle()-(other->getAngle()-180),360)-180;
+    double r1 = (center.getX()+center.getY())/2.0;
+    double r2 = (other->center.getX()+other->center.getY())/2.0;
+    return Vector2d(xDiff, yDiff).magnitude() < r1+r2;
+}
+
+const BoundingBox RotatingThing::getBounds()const{
+    //Vector2d(center+polarPosition())
+    return BoundingBox(polarPosition()-center*getSizeMultiplier(), 
+    center.getX()*2*getSizeMultiplier(), center.getY()*2*getSizeMultiplier());
 }

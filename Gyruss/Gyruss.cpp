@@ -14,4 +14,7 @@ void Gyruss::update(double dt){
 bool Gyruss::isOver()const{return done;}
 void Gyruss::startLevel(){
     player = new Player();
+    for(int i=0; i<600; i+=75){
+        new Enemy(Vector2d(i, 200+i/2));
+    }
 }
