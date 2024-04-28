@@ -9,7 +9,7 @@ class Shot : public RotatingThing{
     Shot(double x_val);
     ~Shot();
     
-    void handleCollision(const vmi::Thing* other){} //Skipped
+    void handleCollision(const vmi::Thing* other); //Skipped
     void move(double dt);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

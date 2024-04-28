@@ -11,7 +11,7 @@ using namespace vmi;
 
 Player::Player()
 : RotatingThing(Vector2d(RESOLUTION*0.25, RESOLUTION*0.85), Vector2d(), Vector2d(),
-new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 1.6){
+new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 1){
     center = Vector2d(20, 21);
 }
 Player::~Player(){

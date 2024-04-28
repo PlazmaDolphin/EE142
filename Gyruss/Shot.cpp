@@ -3,6 +3,7 @@
 #include <Vector2d.hpp>
 #include <SpriteShape.hpp>
 #include "Shot.h"
+#include "Enemy.h"
 
 using namespace vmi;
 
@@ -27,4 +28,10 @@ void Shot::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     // draw the ship
     RotatingThing::draw(target, states);
+}
+
+void Shot::handleCollision(const vmi::Thing* other){
+    if(typeid(*other)==typeid(Enemy)){
+        die(); //Can't kill 2 birds with one stone
+    }
 }

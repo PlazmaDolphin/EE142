@@ -1,4 +1,3 @@
-#define DEBUG
 #include "RotatingThing.h"
 using namespace vmi;
 using namespace std;
@@ -36,7 +35,7 @@ void RotatingThing::draw(sf::RenderTarget& target, sf::RenderStates states) cons
     // now draw it
 	shape->draw(target, states);
 
-
+    /*
     #ifdef DEBUG
     // for debugging, draw the bounding box
     BoundingBox bb = getBounds();
@@ -49,6 +48,7 @@ void RotatingThing::draw(sf::RenderTarget& target, sf::RenderStates states) cons
     box.setPosition(bb.getUl().getX(), bb.getUl().getY());
     target.draw(box, sf::RenderStates());
     #endif
+    */
 }
 double RotatingThing::getAngle() const{
     return 270+360.0*x.getX()/resolution;

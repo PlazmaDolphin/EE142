@@ -2,6 +2,7 @@
 #include <Vector2d.hpp>
 #include "RotatingThing.h"
 #include <Thing.hpp>
+#include "Hazard.h"
 
 class Enemy : public RotatingThing{
     public:
@@ -11,5 +12,8 @@ class Enemy : public RotatingThing{
     void move(double dt);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
+    bool isIdle;//True: chilling in center; False: Attacking the player
     double rotate;
+    Hazard* shot;
+    static int swarming;//Amount currently attacking the player
 };

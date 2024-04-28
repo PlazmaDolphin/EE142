@@ -20,5 +20,5 @@ public:
 private:
     bool done;
     Player* player;
-    Enemy* enemy;
+    std::vector<Enemy*> badGuys;
 };

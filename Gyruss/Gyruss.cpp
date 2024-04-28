@@ -10,11 +10,21 @@ void Gyruss::update(double dt){
     if(Game::isKeyPressed(Key::X)){
         done = true;
     }
+    for(Enemy* bad: badGuys){//remove from list if dead
+        if(!bad->isAlive()){
+            badGuys.erase(std::find(badGuys.begin(), badGuys.end(), bad));
+        }
+    }
+    if(badGuys.size() == 0){//if there are no more bad guys, make new ones
+        for(int i=0; i<600; i+=75){
+            badGuys.push_back(new Enemy(Vector2d(i, i/2)));
+        }
+    }
 }
 bool Gyruss::isOver()const{return done;}
 void Gyruss::startLevel(){
     player = new Player();
     for(int i=0; i<600; i+=75){
-        new Enemy(Vector2d(i, 200+i/2));
+        badGuys.push_back(new Enemy(Vector2d(i, i/2)));
     }
 }
