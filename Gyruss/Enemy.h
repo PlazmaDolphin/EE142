@@ -12,7 +12,7 @@ class Enemy : public RotatingThing{
     void move(double dt);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
-    bool isIdle;//True: chilling in center; False: Attacking the player
+    bool isSwarming;//True: chilling in center; False: Attacking the player
     double rotate;
     Hazard* shot;
     static int swarming;//Amount currently attacking the player
