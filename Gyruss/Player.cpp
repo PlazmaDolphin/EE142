@@ -11,7 +11,7 @@ using namespace vmi;
 
 Player::Player()
 : RotatingThing(Vector2d(RESOLUTION*0.25, RESOLUTION*0.85), Vector2d(), Vector2d(),
-new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 1){
+new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 1.5){
     center = Vector2d(20, 21);
 }
 Player::~Player(){
@@ -23,7 +23,7 @@ void Player::handleCollision(const Thing* other){
 }
 //Move by rotating in a circle
 void Player::move(double dt){
-    if(Game::isKeyPressed(Key::Space) && shots.size()<3){
+    if( ( Game::isKeyPressed(Key::Space) || Game::isKeyPressed(Key::Slash) )&& shots.size()<3){
         if(!justShot){
             justShot = true;
             shots.push_back(new Shot(x.getX()));
