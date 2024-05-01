@@ -13,6 +13,7 @@ using namespace vmi;
 using namespace std;
 int  Enemy::swarming = 0;
 bool Enemy::canSwarm = true;
+int  Enemy::maxSwarm = 2;
 Enemy::Enemy(Vector2d pos)
 : RotatingThing(pos, Vector2d(), Vector2d(),
   new SpriteShape("Gyruss/enemy.png"), RESOLUTION, 0.55), shot(new Hazard(x)){
@@ -30,7 +31,7 @@ void Enemy::move(double dt){
     if(!shot->isAlive() && isSwarming){
         shot = new Hazard(x);
     }
-    if(swarming < 3 && !isSwarming && canSwarm && rand()%30==1){ //join the swarm
+    if(swarming < maxSwarm && !isSwarming && canSwarm && rand()%30==1){ //join the swarm
         isSwarming = true;
         canSwarm = false;
         Timer::createTimer(1, [&](){canSwarm=true;});

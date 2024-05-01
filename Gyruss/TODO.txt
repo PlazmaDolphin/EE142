@@ -4,8 +4,8 @@ BAREBONES GYRUSS:
 [X] Collision detection
 [X] Enemies
 [X] Enemy projectiles
-6. Game over
-7. Scoring
+[X] Game over
+[X] Scoring
 
 FULL GYRUSS GAME:
 1. Life System + Extra Lives

@@ -13,7 +13,7 @@ public:
     void update(double dt);
 
     void startLevel();
-
+    void genStage();
     // is the game over?
     bool isOver() const;
 
@@ -21,4 +21,5 @@ private:
     bool done;
     Player* player;
     std::vector<Enemy*> badGuys;
+    int stage;
 };

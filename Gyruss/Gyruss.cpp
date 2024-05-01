@@ -16,8 +16,13 @@ void Gyruss::update(double dt){
         }
     }
     if(badGuys.size() == 0){//if there are no more bad guys, make new ones
-        for(int i=0; i<600; i+=75){
-            badGuys.push_back(new Enemy(Vector2d(i, 0)));
+        player->warp();
+        if(player->animDone()){
+            stage++;
+            player->updateStage(stage);
+            player->reset();
+            Enemy::maxSwarm = stage;
+            genStage();
         }
     }
 
@@ -56,7 +61,12 @@ void Gyruss::update(double dt){
 bool Gyruss::isOver()const{return done;}
 void Gyruss::startLevel(){
     player = new Player();
-    for(int i=0; i<600; i+=75){
+    stage = 1;
+    genStage();
+}
+//Generate the stage
+void Gyruss::genStage(){
+    for(int i=0; i<600; i+=(600.0/(2+stage*2))){
         badGuys.push_back(new Enemy(Vector2d(i, 0)));
     }
 }

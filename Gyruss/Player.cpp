@@ -20,6 +20,10 @@ new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 1.5){
     scoreText.setCharacterSize(48);
     scoreText.setPosition(Vector2d(0, RESOLUTION));
     scoreText.setFill(Color::White);
+    stageText.setText("Stage 1");
+    stageText.setCharacterSize(48);
+    stageText.setPosition(Vector2d(400, RESOLUTION));
+    stageText.setFill(Color::White);
 }
 Player::~Player(){
     delete shape;
@@ -33,6 +37,12 @@ void Player::handleCollision(const Thing* other){
 }
 //Move by rotating in a circle
 void Player::move(double dt){
+    //do animations
+    if(anim==1){
+        warp();
+        MovingThing::move(dt);
+        return;
+    }
     //Update Score
     std::stringstream s;
     s << "  Score\n" <<std::setfill('0') << std::setw(7) << Shot::score;
@@ -83,4 +93,35 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
     // draw the ship
     RotatingThing::draw(target, states);
     scoreText.draw(target, states);
+    stageText.draw(target, states);
+}
+
+void Player::warp(){
+    //delete shots
+    for(Shot* s: shots){
+        shots.erase(std::find(shots.begin(), shots.end(), s));
+    }
+    anim = 1;
+    v = Vector2d(0, -150);
+    if(x.getY() < 0){
+        v.setY(0);
+        anim = 0;
+    }
+}
+
+bool Player::animDone(){
+    return anim==0;
+}
+
+void Player::reset(){
+    x = Vector2d(RESOLUTION*0.25, RESOLUTION*0.85);
+    v = Vector2d();
+    justShot = false;
+    angle = 270;
+}
+
+void Player::updateStage(int stage){
+    std::stringstream s;
+    s << "Stage " << stage;
+    stageText.setText(s.str());
 }

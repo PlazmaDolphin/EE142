@@ -12,7 +12,8 @@ class Enemy : public RotatingThing{
     void move(double dt);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     bool goToCenter(double dt);
-
+    static int maxSwarm;
+    
     private:
     bool isSwarming;//True: chilling in center; False: Attacking the player
     bool charging; //Whether enemy is going into moveable space
