@@ -3,7 +3,7 @@
 
 using namespace vmi;
 Gyruss::Gyruss()
-: Game("Gyruss but better v0.1", RESOLUTION, RESOLUTION), done(false){
+: Game("Gyruss but better v0.1", RESOLUTION, RESOLUTION+200), done(false){
     startLevel();
 }
 void Gyruss::update(double dt){
@@ -18,6 +18,38 @@ void Gyruss::update(double dt){
     if(badGuys.size() == 0){//if there are no more bad guys, make new ones
         for(int i=0; i<600; i+=75){
             badGuys.push_back(new Enemy(Vector2d(i, 0)));
+        }
+    }
+
+    if (!player->isAlive()) {
+        Key response;
+
+        // display message to user
+        do {
+            response = Game::createMessage("Play again (Y/N)?",
+                            Vector2d(50, 200), 50, Color::Yellow
+            );
+        } while (response != Key::Y && response != Key::N);
+
+        // do we play again?
+        if (response == Key::Y) {
+            Shot::score = 0;
+            // first, cancel all active timers
+            Timer::cancelAllTimers();
+            for(Enemy* guy : badGuys){
+                guy->goToCenter(dt);
+            }
+
+            // next, kill all game characters so we can re-start
+            Thing::killAllThings();
+
+            // finally, restart the level
+            startLevel();
+        }
+
+        else {
+            // don't play again
+            done = true;
         }
     }
 }

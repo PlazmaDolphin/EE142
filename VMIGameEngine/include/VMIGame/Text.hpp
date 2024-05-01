@@ -71,7 +71,7 @@ private:
             bool success = false;
 
             // didn't find one, so hope it's in the right dir
-            font->loadFromFile("./VMIGameEngine/resource/sansation.ttf");
+            font->loadFromFile("./VMIGameEngine/resource/vectorBold.ttf");
         }
 #endif        
     }

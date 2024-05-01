@@ -3,6 +3,7 @@
 
 #include "RotatingThing.h"
 #include "Shot.h"
+#include <Text.hpp>
 #include <Thing.hpp>
 
 class Player : public RotatingThing{
@@ -19,4 +20,5 @@ class Player : public RotatingThing{
     // list of shots fired by the player
     std::vector<Shot*> shots;
     bool justShot = false;
+    vmi::Text scoreText;
 };

@@ -6,7 +6,7 @@
 #include "Enemy.h"
 
 using namespace vmi;
-
+int Shot::score=0;
 Shot::Shot(double x)
 : RotatingThing(Vector2d(x, RESOLUTION*0.8), Vector2d(0, -900), Vector2d(),
 new SpriteShape("Gyruss/player_shot.png"), RESOLUTION, 3.0){
@@ -32,6 +32,7 @@ void Shot::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Shot::handleCollision(const vmi::Thing* other){
     if(typeid(*other)==typeid(Enemy)){
+        score += 100;
         die(); //Can't kill 2 birds with one stone
     }
 }

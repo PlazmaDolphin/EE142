@@ -20,6 +20,7 @@ Enemy::Enemy(Vector2d pos)
     shot->die(); //Need to initialize shot before checking if it's alive
     isSwarming = false;
     charging = false;
+    canSwarm = true;
 }
 Enemy::~Enemy(){
     delete shape;
@@ -48,7 +49,7 @@ void Enemy::move(double dt){
             rotate = 0;
             charging = true;
         }
-        else{
+        else{ //Quickly return to the center
             v=Vector2d(20, -180);
             rotate = 180;
         }
@@ -63,11 +64,32 @@ void Enemy::move(double dt){
     }
     if(!isSwarming) v.setX(10); //Center enemies rotate slowly
     //Ensure that 0<=x<RESOLUTION
-    x.setX(x.getX()<RESOLUTION ? x.getX(): 0);
-    x.setX(x.getX()>=0 ? x.getX(): RESOLUTION);
+    x.setX(x.getX()<RESOLUTION ? x.getX():0);
+    x.setX(x.getX()>=0?x.getX(): RESOLUTION);
     angle = rotate+270+360.0*x.getX()/RESOLUTION;
     MovingThing::move(dt);
 }
+
+bool Enemy::goToCenter(double dt){
+    //head to center
+    v=Vector2d(20, -250);
+    rotate = 180;
+    //set flag variables so nobody tries to swarm
+    isSwarming = false;
+    canSwarm = false;
+    charging = false;
+    swarming = 0;
+    //If enemy has returned to center, return true
+    if(isSwarming && (x.getY() > RESOLUTION || 0 > x.getY())){ //exit the swarm
+        x.setY(0);
+        v = Vector2d();
+        rotate = 0;
+        return true;
+    }
+    return false;
+}
+
+
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     // draw the ship

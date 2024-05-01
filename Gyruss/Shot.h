@@ -12,4 +12,5 @@ class Shot : public RotatingThing{
     void handleCollision(const vmi::Thing* other); //Skipped
     void move(double dt);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    static int score;
 };
