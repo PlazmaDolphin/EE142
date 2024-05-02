@@ -1,4 +1,5 @@
 #include "Gyruss.h"
+#include "Particle.h"
 #define RESOLUTION 600
 
 using namespace vmi;
@@ -60,6 +61,7 @@ void Gyruss::update(double dt){
 }
 bool Gyruss::isOver()const{return done;}
 void Gyruss::startLevel(){
+    Particle::startStarfield();
     player = new Player();
     stage = 1;
     genStage();

@@ -145,7 +145,7 @@ inline void Thing::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     // now draw it
 	shape->draw(target, states);
-
+/*
 #ifdef DEBUG
     // for debugging, draw the bounding box
     BoundingBox bb = getBounds();
@@ -158,7 +158,7 @@ inline void Thing::draw(sf::RenderTarget& target, sf::RenderStates states) const
     box.setPosition(bb.getUl().getX(), bb.getUl().getY());
     target.draw(box, sf::RenderStates());
 
-#endif
+#endif*/
 }
 
 // get a bounding box around thing -- we have to take the rotation, scale, and position into account,
