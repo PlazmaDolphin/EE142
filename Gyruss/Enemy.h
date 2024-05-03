@@ -15,10 +15,10 @@ class Enemy : public RotatingThing{
     static int maxSwarm;
     
     private:
-    bool isSwarming;//True: chilling in center; False: Attacking the player
-    bool charging; //Whether enemy is going into moveable space
+    bool isSwarming;//False: chilling in center; True: Attacking the player
+    bool charging; //Whether enemy is going into player's space
     double rotate;
     Hazard* shot;
-    static bool canSwarm;//Tied to timer
+    static bool canSwarm;//Is another enemy allowed to join the swarm?
     static int swarming;//Amount currently attacking the player
 };

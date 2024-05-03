@@ -16,13 +16,14 @@ Player::Player()
 : RotatingThing(Vector2d(RESOLUTION*0.25, RESOLUTION*0.85), Vector2d(), Vector2d(),
 new SpriteShape("Gyruss/ship_center.png"), RESOLUTION, 1.5){
     center = Vector2d(20, 21);
+    //initialize text
     scoreText.setText("0");
     scoreText.setCharacterSize(48);
     scoreText.setPosition(Vector2d(0, RESOLUTION));
     scoreText.setFill(Color::White);
     stageText.setText("Stage 1");
     stageText.setCharacterSize(48);
-    stageText.setPosition(Vector2d(400, RESOLUTION));
+    stageText.setPosition(Vector2d(360, RESOLUTION));
     stageText.setFill(Color::White);
 }
 Player::~Player(){
@@ -30,6 +31,7 @@ Player::~Player(){
 }
 
 void Player::handleCollision(const Thing* other){
+    //you can die by enemies or their shots
     if(typeid(*other)==typeid(Enemy)
     || typeid(*other)==typeid(Hazard)){
         die();
@@ -82,6 +84,7 @@ void Player::move(double dt){
         v.setX(0);
         return;
     }
+    //Move either clockwise or counterclockwise, whichever is closer
     if(std::fmod(angle-(move-180),360)-180<0) v.setX(200);
     else(v.setX(-200));
     angle = 270+360.0*x.getX()/RESOLUTION;
@@ -112,12 +115,12 @@ void Player::warp(){
 bool Player::animDone(){
     return anim==0;
 }
-
+//Used at the beginning of new stages
 void Player::reset(){
     x = Vector2d(RESOLUTION*0.25, RESOLUTION*0.85);
     v = Vector2d();
     justShot = false;
-    angle = 270;
+    angle = 0;
 }
 
 void Player::updateStage(int stage){

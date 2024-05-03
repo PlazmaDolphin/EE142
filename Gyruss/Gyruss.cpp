@@ -4,7 +4,7 @@
 
 using namespace vmi;
 Gyruss::Gyruss()
-: Game("Gyruss but better v0.1", RESOLUTION, RESOLUTION+200), done(false){
+: Game("funy spin game", RESOLUTION, RESOLUTION+200), done(false){
     startLevel();
 }
 void Gyruss::update(double dt){
@@ -16,7 +16,7 @@ void Gyruss::update(double dt){
             badGuys.erase(std::find(badGuys.begin(), badGuys.end(), bad));
         }
     }
-    if(badGuys.size() == 0){//if there are no more bad guys, make new ones
+    if(badGuys.size() == 0){//if there are no more bad guys, go to the next stage
         player->warp();
         if(player->animDone()){
             stage++;
@@ -45,14 +45,11 @@ void Gyruss::update(double dt){
             for(Enemy* guy : badGuys){
                 guy->goToCenter(dt);
             }
-
             // next, kill all game characters so we can re-start
             Thing::killAllThings();
-
             // finally, restart the level
             startLevel();
         }
-
         else {
             // don't play again
             done = true;
@@ -60,6 +57,7 @@ void Gyruss::update(double dt){
     }
 }
 bool Gyruss::isOver()const{return done;}
+//Start the game
 void Gyruss::startLevel(){
     Particle::startStarfield();
     player = new Player();

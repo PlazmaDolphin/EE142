@@ -17,6 +17,7 @@ Hazard::~Hazard(){
 }
 
 void Hazard::move(double dt){
+    //move away from center, despawn when outside screen
     angle = 270+360.0*x.getX()/RESOLUTION;
     MovingThing::move(dt);
     if(x.getY() > RESOLUTION){

@@ -14,7 +14,6 @@ class RotatingThing : public vmi::MovingThing{
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     bool actuallyTouching(const RotatingThing* other) const;
     double getAngle() const;
-    //include getBounds to return a (close enough) bounding box based on circle collision
     const vmi::BoundingBox getBounds() const;
     private:
     int resolution; //needed for position and size conversion, assumes play area is square

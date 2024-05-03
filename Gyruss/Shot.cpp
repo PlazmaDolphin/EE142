@@ -8,14 +8,14 @@
 using namespace vmi;
 int Shot::score=0;
 Shot::Shot(double x)
-: RotatingThing(Vector2d(x, RESOLUTION*0.8), Vector2d(0, -900), Vector2d(),
+: RotatingThing(Vector2d(x, RESOLUTION*0.8), Vector2d(0, -600), Vector2d(),
 new SpriteShape("Gyruss/player_shot.png"), RESOLUTION, 3.0){
     center = Vector2d(3, 4);
 }
 Shot::~Shot(){
     delete shape;
 }
-
+//always move towards the center
 void Shot::move(double dt){
     angle = 270+360.0*x.getX()/RESOLUTION;
     MovingThing::move(dt);

@@ -29,18 +29,24 @@ Enemy::~Enemy(){
 
 void Enemy::move(double dt){
     if(!shot->isAlive() && isSwarming){
-        shot = new Hazard(x);
+        shot = new Hazard(x); //If shot goes off-screen, make a new one
     }
     if(swarming < maxSwarm && !isSwarming && canSwarm && rand()%30==1){ //join the swarm
         isSwarming = true;
         canSwarm = false;
-        Timer::createTimer(1, [&](){canSwarm=true;});
+        Timer::createTimer(0.4, [&](){canSwarm=true;});
         swarming+=1;
-        v.setX(125);
         v.setY(75);
-        rotate = 90;
+        if(rand()%2==0){
+            v.setX(125); //can attack in either direction
+            rotate = 90;
+        }
+        else{
+            v.setX(-125);
+            rotate = 180;
+        }
     }
-    if(isSwarming && rand()%(int)(20.0/dt)==1){
+    if(isSwarming && rand()%(int)(15.0/dt)==1){
         rotate += 180; //JUKE EM
         v.setX(-v.getX());
     }

@@ -6,6 +6,7 @@ RotatingThing::RotatingThing(const Vector2d _x, const Vector2d _v, const Vector2
     resolution = r;
     fullSize = _fullsize;
 };
+//HR: Most equations found through playing around in desmos
 const double RotatingThing::getScaleFactor() const{
     double C = resolution/3.0;
     return resolution*(C+(x.getY())) / (C+resolution);
@@ -35,7 +36,7 @@ void RotatingThing::draw(sf::RenderTarget& target, sf::RenderStates states) cons
     // now draw it
 	shape->draw(target, states);
 
-    /*
+    /* Baker BoundingBox debug code
     #ifdef DEBUG
     // for debugging, draw the bounding box
     BoundingBox bb = getBounds();
@@ -53,6 +54,7 @@ void RotatingThing::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 double RotatingThing::getAngle() const{
     return 270+360.0*x.getX()/resolution;
 }
+//unused+untested function
 bool RotatingThing::actuallyTouching(const RotatingThing* other) const{
     cout << "ROTATION COLLISION";
     double yDiff = polarPosition().getY() - other->polarPosition().getY();
@@ -61,9 +63,8 @@ bool RotatingThing::actuallyTouching(const RotatingThing* other) const{
     double r2 = (other->center.getX()+other->center.getY())/2.0;
     return Vector2d(xDiff, yDiff).magnitude() < r1+r2;
 }
-
+//Bounding box that matches with the sprite's appearance on screen
 const BoundingBox RotatingThing::getBounds()const{
-    //Vector2d(center+polarPosition())
     return BoundingBox(polarPosition()-center*getSizeMultiplier(), 
     center.getX()*2*getSizeMultiplier(), center.getY()*2*getSizeMultiplier());
 }

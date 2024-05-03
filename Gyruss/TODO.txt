@@ -14,9 +14,9 @@ FULL GYRUSS GAME:
 4. Sprite Animations
 5. Enemy Formations
 6. Special (chance) stages
-7. Starfield background
+[X] Starfield background
 8. Sound?
-9. Pixelated Text font
+[X] Arcade Text font
 
 EXTENDED GAME:
 1. Easy Mode (Healthbar)
