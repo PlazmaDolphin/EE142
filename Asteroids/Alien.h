@@ -1,4 +1,5 @@
 //HR: Started from MrBill.h
+#pragma once
 #include <MovingThing.hpp>
 #include <Thing.hpp>
 #include <Timer.hpp>
@@ -18,7 +19,7 @@ public:
 
 protected:
     void turn();	// change direction
-	virtual void shoot();	// shoot a bullet
+	virtual void shoot() = 0;	// shoot a bullet
 	void retreat(); // run away!
 	bool retreating;			   // whether or not we're retreating
 	vmi::Vector2d retreatVelocity; // speed and direction when retreating

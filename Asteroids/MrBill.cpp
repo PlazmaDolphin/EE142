@@ -26,6 +26,7 @@ using namespace vmi;
 
 MrBill::MrBill(const Player *_player) : Alien(Vector2d(840, 100), Vector2d(-100, 0), (Vector2d(100, 0)))
 {
+	player = _player;
 	// build the shape
 	VertexShape *vs = dynamic_cast<VertexShape *>(shape);
 	vs->moveTo(Vector2d(-18, 3));

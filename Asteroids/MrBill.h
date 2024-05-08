@@ -22,7 +22,6 @@ public:
 	MrBill(const Player *player);
 	~MrBill();
 
-	void handleCollision(const vmi::Thing *other);
 
 	int getPoints() const;
 

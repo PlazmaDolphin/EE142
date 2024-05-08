@@ -20,8 +20,6 @@ public:
 	Sluggo();
 	~Sluggo();
 
-	void handleCollision(const vmi::Thing *other);
-
 	int getPoints() const;
 
 private:
