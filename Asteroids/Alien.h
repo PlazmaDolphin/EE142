@@ -1,6 +1,4 @@
-#pragma once
-
-#include <Vector2d.hpp>
+//HR: Started from MrBill.h
 #include <MovingThing.hpp>
 #include <Thing.hpp>
 #include <Timer.hpp>
@@ -10,24 +8,21 @@
 class Alien : public vmi::MovingThing
 {
 public:
-	Alien(const Player *player);
+	Alien(const vmi::Vector2d& x, const vmi::Vector2d& v, const vmi::Vector2d& retreat);
 	~Alien();
 	void handleCollision(const vmi::Thing *other);
 
 	void die();
 
-	int getPoints() const;
+	virtual int getPoints() const = 0;
 
-private:
+protected:
+    void turn();	// change direction
+	virtual void shoot();	// shoot a bullet
+	void retreat(); // run away!
 	bool retreating;			   // whether or not we're retreating
 	vmi::Vector2d retreatVelocity; // speed and direction when retreating
 	vmi::Timer *shootTimer;		   // when to shoot next
 	vmi::Timer *turnTimer;		   // when to change direction
 	vmi::Timer *retreatTimer;	   // when to retreat
-
-	const Player *player; // need to know where the player is to aim
-
-	void turn();	// change direction
-	void shoot();	// shoot a bullet
-	void retreat(); // run away!
 };
