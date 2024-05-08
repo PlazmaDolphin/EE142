@@ -24,11 +24,9 @@
 
 using namespace vmi;
 
-Sluggo::Sluggo() : MovingThing(Vector2d(-40, 50), Vector2d(100, 0), Vector2d(), new VertexShape()),
-				   retreating(false),
-				   retreatVelocity(Vector2d(-100, 0)) // retreat to the left
+Sluggo::Sluggo() : Alien(Vector2d(-40, 50), Vector2d(100, 0), Vector2d(-100, 0))
 {
-	// build the shape first
+	// build the shape
 	VertexShape *vs = dynamic_cast<VertexShape *>(shape);
 	vs->moveTo(Vector2d(-24, 4));
 	vs->lineTo(Vector2d(-8, -4));
@@ -41,74 +39,10 @@ Sluggo::Sluggo() : MovingThing(Vector2d(-40, 50), Vector2d(100, 0), Vector2d(), 
 	vs->lineTo(Vector2d(-24, 4));
 	vs->moveTo(Vector2d(-8, -4));
 	vs->lineTo(Vector2d(8, -4));
-
-	// create timer to shoot after 2-5 seconds
-	int time = rand() % 3 + 2;
-	shootTimer = Timer::createTimer(time, [&]() {
-		shoot();
-	});
-
-	// create timer to turn after 3-8 seconds
-	time = rand() % 5 + 3;
-	turnTimer = Timer::createTimer(time, [&]() {
-		turn();
-	});
-
-	// and timer to retreat after 15-20 seconds
-	time = rand() % 5 + 15;
-	retreatTimer = Timer::createTimer(time, [&]() {
-		retreat();
-	});
 }
 
-Sluggo::~Sluggo()
-{
-	// cancel all the timers
-	if (shootTimer != nullptr)
-		shootTimer->cancel();
-	if (turnTimer != nullptr)
-		turnTimer->cancel();
-	if (retreatTimer != nullptr)
-		retreatTimer->cancel();
-
-	delete shape;
-}
-
-void Sluggo::handleCollision(const Thing *other)
-{
-	// is this a wall?
-	if (typeid(*other) == typeid(Wall))
-	{
-		// are we retreating or attacking?
-		if (retreating)
-		{
-			// we go away when we hit the wall to hide
-			die();
-		}
-		else
-		{
-			// wraparound our location
-			const Wall *wall = dynamic_cast<const Wall *>(other);
-
-			// add offset vector from wall
-			x += wall->getOffset();
-		}
-	}
-
-	// anything else hit is fatal
-	else if ((typeid(*other) == typeid(Player)) || (typeid(*other) == typeid(Asteroid)) || (typeid(*other) == typeid(Bullet)) || (typeid(*other) == typeid(PlayerBullet)))
-	{
-		die();
-	}
-}
-
-// Explode when we die
-void Sluggo::die()
-{
-	Particle::explode(this);
-
-	Thing::die();
-}
+//Alien does the work for us
+Sluggo::~Sluggo(){}
 
 // Sluggo is worth 200 points
 int Sluggo::getPoints() const
@@ -132,38 +66,4 @@ void Sluggo::shoot()
 	shootTimer = Timer::createTimer(time, [&]() {
 		shoot();
 	});
-}
-
-// Turn in a random direction
-void Sluggo::turn()
-{
-	const double pi = 3.1415926;
-	double ang = (rand() % 360) * (pi / 180.0);
-
-	v = 100 * Vector2d(sin(ang), -cos(ang));
-
-	// re-load the timer to turn again
-	int time = rand() % 5 + 5; // 5 - 10 seconds
-	turnTimer = Timer::createTimer(time, [&]() {
-		turn();
-	});
-}
-
-// Retreat -- move offscreen until we hit a wall
-void Sluggo::retreat()
-{
-	retreating = true;
-
-	// move offscreen
-	v = retreatVelocity;
-
-	// cancel any pending turns
-	if (turnTimer)
-	{
-		turnTimer->cancel();
-		turnTimer = nullptr;
-	}
-
-	// and we only retreat once
-	retreatTimer = nullptr;
 }

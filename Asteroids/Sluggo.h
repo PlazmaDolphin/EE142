@@ -12,8 +12,9 @@
 #include <MovingThing.hpp>
 #include <Thing.hpp>
 #include <Timer.hpp>
+#include "Alien.h"
 
-class Sluggo : public vmi::MovingThing
+class Sluggo : public Alien
 {
 public:
 	Sluggo();
@@ -21,18 +22,9 @@ public:
 
 	void handleCollision(const vmi::Thing *other);
 
-	void die();
-
 	int getPoints() const;
 
 private:
-	bool retreating;			   // whether or not we'r retreating
-	vmi::Vector2d retreatVelocity; // speed and direction when retreating
-	vmi::Timer *shootTimer;		   // when to shoot next
-	vmi::Timer *turnTimer;		   // when to change direction
-	vmi::Timer *retreatTimer;	   // when to retreat
-
-	void turn();	// change direction
 	void shoot();	// shoot a bullet
 	void retreat(); // run away!
 };
