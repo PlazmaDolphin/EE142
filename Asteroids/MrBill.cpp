@@ -24,12 +24,9 @@
 
 using namespace vmi;
 
-MrBill::MrBill(const Player *_player) : MovingThing(Vector2d(840, 100), Vector2d(-100, 0), Vector2d(), new VertexShape()),
-										retreating(false),
-										retreatVelocity(Vector2d(100, 0)), // retreat to the right
-										player(_player)
+MrBill::MrBill(const Player *_player) : Alien(Vector2d(840, 100), Vector2d(-100, 0), (Vector2d(100, 0)))
 {
-	// build the shape first
+	// build the shape
 	VertexShape *vs = dynamic_cast<VertexShape *>(shape);
 	vs->moveTo(Vector2d(-18, 3));
 	vs->lineTo(Vector2d(-6, -3));
@@ -42,74 +39,10 @@ MrBill::MrBill(const Player *_player) : MovingThing(Vector2d(840, 100), Vector2d
 	vs->lineTo(Vector2d(-18, 3));
 	vs->moveTo(Vector2d(-6, -3));
 	vs->lineTo(Vector2d(6, -3));
-
-	// initialize timer to shoot after 2-5 seconds
-	int time = rand() % 3 + 2;
-	shootTimer = Timer::createTimer(time, [&]() {
-		shoot();
-	});
-
-	// initialize timer to turn after 3-8 seconds
-	time = rand() % 5 + 3;
-	turnTimer = Timer::createTimer(time, [&]() {
-		turn();
-	});
-
-	// and timer to retreat after 15-20 seconds
-	time = rand() % 5 + 15;
-	retreatTimer = Timer::createTimer(time, [&]() {
-		retreat();
-	});
 }
 
-MrBill::~MrBill()
-{
-	// cancel all the timers
-	if (shootTimer != nullptr)
-		shootTimer->cancel();
-	if (turnTimer != nullptr)
-		turnTimer->cancel();
-	if (retreatTimer != nullptr)
-		retreatTimer->cancel();
+MrBill::~MrBill(){}
 
-	delete shape;
-}
-
-void MrBill::handleCollision(const Thing *other)
-{
-	// is this a wall?
-	if (typeid(*other) == typeid(Wall))
-	{
-		// are we retreating or attacking?
-		if (retreating)
-		{
-			// we go away when we hit the wall to hide
-			die();
-		}
-		else
-		{
-			// wraparound our location
-			const Wall *wall = dynamic_cast<const Wall *>(other);
-
-			// add offset vector from wall
-			x += wall->getOffset();
-		}
-	}
-
-	// anything else hit is fatal
-	else if ((typeid(*other) == typeid(Player)) || (typeid(*other) == typeid(Asteroid)) || (typeid(*other) == typeid(Bullet)) || (typeid(*other) == typeid(PlayerBullet)))
-	{
-		die();
-	}
-}
-
-// Explode when we die
-void MrBill::die()
-{
-	Particle::explode(this);
-
-	Thing::die();
-}
 
 // MrBill is worth 1000 points
 int MrBill::getPoints() const
@@ -142,38 +75,4 @@ void MrBill::shoot()
 	shootTimer = Timer::createTimer(time, [&]() {
 		shoot();
 	});
-}
-
-// Turn in a random direction
-void MrBill::turn()
-{
-	const double pi = 3.1415926;
-	double ang = (rand() % 360) * (pi / 180.0);
-
-	v = 100 * Vector2d(sin(ang), -cos(ang));
-
-	// re-load the timer to turn again
-	int time = rand() % 5 + 5; // 5 - 10 seconds
-	turnTimer = Timer::createTimer(time, [&]() {
-		turn();
-	});
-}
-
-// Retreat -- move offscreen until we hit a wall
-void MrBill::retreat()
-{
-	retreating = true;
-
-	// move to the right
-	v = retreatVelocity;
-
-	// cancel any pending turns
-	if (turnTimer)
-	{
-		turnTimer->cancel();
-		turnTimer = nullptr;
-	}
-
-	// and we only retreat once
-	retreatTimer = nullptr;
 }
